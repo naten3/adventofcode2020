@@ -20,7 +20,6 @@ object Day3 {
   def part2(lines: Array[Array[Boolean]]): Long = List((1,1), (3,1),(5,1),(7,1),(1,2)).foldLeft(1L){(product, nextSlope) => {
     val (xChange, yChange) = nextSlope
     val treeCount = followSlope(yChange, xChange, lines)
-    System.out.println((treeCount))
     product * followSlope(yChange, xChange, lines)
   }}
 
