@@ -12,7 +12,7 @@ object Day5 {
   }
 
   def part1(lines: List[String]): Int =
-    lines.map(convertToSeatId(_)).max
+    lines.map(convertToSeatId).max
 
 
   def convertToSeatId(seatInstructions: String): Int = {
@@ -24,7 +24,7 @@ object Day5 {
   }
 
   def part2(lines: List[String]): Int = {
-    val filledSeats = lines.map(convertToSeatId(_)).toSet
+    val filledSeats = lines.map(convertToSeatId).toSet
     (0 to 127 * 8 + 7).find(i => filledSeats.contains(i - 1) && !filledSeats.contains(i) && filledSeats.contains(i+1))
       .get
   }
