@@ -28,6 +28,7 @@ object Day10 {
   def part2(lines: List[Int]): Long = {
     val sortedLines = lines.sorted
     val linesWithAdapters = 0 +: sortedLines :+ (sortedLines.last + 3)
+
     val jumps = linesWithAdapters
       .sliding(2)
       .map(pair => pair.last - pair.head)
