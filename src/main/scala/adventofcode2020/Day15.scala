@@ -19,43 +19,39 @@ object Day15 {
     println(part2(starterNumbers))
   }
 
-  case class State(previousNumbers: Map[Int, Int], previousNumber: Int)
-  def increment(prevState: State,
+  def increment(previousNumbers: scala.collection.mutable.Map[Int, Int],
+                previousNumber: Int,
                 index: Int,
-                starterNumbers: Array[Int]): State = {
+                starterNumbers: Array[Int]): Int = {
     val nextNumber =
       if (index < starterNumbers.length) {
         starterNumbers(index)
       } else {
-        prevState.previousNumbers
-          .get(prevState.previousNumber)
+        previousNumbers
+          .get(previousNumber)
           .map(index - _ - 1)
           .getOrElse(0)
       }
-    val newMap = if (index == 0) {
-      // prevState.previousNumber wasn't in the sequence so don't add it.
-      prevState.previousNumbers
-    } else {
-      prevState.previousNumbers + (prevState.previousNumber -> (index - 1))
+    if (index != 0) {
+      previousNumbers.addOne((previousNumber, index - 1))
     }
-
-    State(newMap, nextNumber)
+    nextNumber
   }
 
   def part1(starterNumbers: Array[Int]): Int = {
-
+    val previousNumbers = scala.collection.mutable.Map[Int, Int]()
     (0 until 2020)
-      .foldLeft(State(Map[Int, Int](), 0)) { (prevState, index) =>
-        increment(prevState, index, starterNumbers)
+      .foldLeft(0) { (previousNumber, index) =>
+        increment(previousNumbers, previousNumber, index, starterNumbers)
       }
-      .previousNumber
+
   }
   def part2(starterNumbers: Array[Int]): Int = {
+    val previousNumbers = scala.collection.mutable.Map[Int, Int]()
     (0 until 30000000)
-      .foldLeft(State(Map[Int, Int](), 0)) { (prevState, index) =>
-        increment(prevState, index, starterNumbers)
+      .foldLeft(0) { (previousNumber, index) =>
+        increment(previousNumbers, previousNumber, index, starterNumbers)
       }
-      .previousNumber
   }
 
 }
