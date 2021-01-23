@@ -43,9 +43,11 @@ object Day16 {
       })
       .toArray
 
+    // improves performance since we'll often terminate before getting to the larger sets of fields
     val orderedIndexList =
       possibleFieldsByIndex.zipWithIndex.sortBy(_._1.size).map(_._2).toList
 
+    // track remaining fields in mutable set for performance
     val remainingFields = scala.collection.mutable.Set[Field]()
     remainingFields.addAll(input.fields)
 
